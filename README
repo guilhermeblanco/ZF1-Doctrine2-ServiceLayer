@@ -1,0 +1,1 @@
+This package requires https://github.com/guilhermeblanco/ZendFramework1-Doctrine2 to be setup on your project, since it uses it as base component for integration.
