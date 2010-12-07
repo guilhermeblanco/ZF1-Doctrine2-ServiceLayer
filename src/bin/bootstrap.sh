@@ -8,6 +8,7 @@
 APP_ROOT="../"
 
 # Removing directories
+rm -f ${APP_ROOT}application/configs/doctrine.ini
 rm -Rf ${APP_ROOT}library/ZF1-D2
 rm -Rf ${APP_ROOT}library/Doctrine
 rm -Rf ${APP_ROOT}library/Symfony
@@ -27,7 +28,8 @@ git clone git://github.com/doctrine/doctrine2.git ${APP_ROOT}vendor/doctrine-orm
 svn co http://framework.zend.com/svn/framework/standard/trunk/library/Zend ${APP_ROOT}vendor/zend
 
 # Copying files
-cp -R ${APP_ROOT}vendor/ZF1-D2/library/Core ${APP_ROOT}library/Core
+cp -R ${APP_ROOT}vendor/ZF1-D2/library/Core ${APP_ROOT}library
+cp ${APP_ROOT}vendor/ZF1-D2/application/configs/application.ini ${APP_ROOT}application/configs/doctrine.ini
 
 mkdir -p ${APP_ROOT}library/Doctrine
 

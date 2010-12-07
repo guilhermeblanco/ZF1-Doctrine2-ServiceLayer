@@ -13,15 +13,21 @@ class DefaultLoaderTest extends \PHPUnit_Framework_TestCase
 {
     public function testInstantiation()
     {
-        $iniFile  = __DIR__ . '/../../../../../src/application/configs/services.ini'; // include_path
+        $configDir = APPLICATION_PATH . '/configs';
+        $services  = $configDir . '/services.ini';
+        $doctrine  = $configDir . '/doctrine.ini';
 
-        $config   = new \Zend_Config_Ini($iniFile);
-        $context  = new Service\Context\IniFileContext(array(
-            'path' => $iniFile
+        $context   = new Service\Context\IniFileContext(array(
+            'path' => $services
         ));
-        $doctrine = new 
-        $locator  = new Service\ServiceLocator($context, $doctrine);
-        $loader   = new Service\Loader\DefaultLoader($locator);
+
+        $d2Config  = new \Zend_Config_Ini($doctrine, 'production');
+        $container = new \Core\Application\Container\DoctrineContainer(
+            $d2Config->resources->doctrine->toArray()
+        );
+
+        $locator   = new Service\ServiceLocator($context, $container);
+        $loader    = new Service\Loader\DefaultLoader($locator);
 
         $this->assertType('stdClass', $loader->load('stdClass'));
     }

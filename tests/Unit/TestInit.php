@@ -7,6 +7,8 @@ namespace Unit;
 
 error_reporting(E_ALL | E_STRICT);
 
+define('APPLICATION_PATH', __DIR__ . '/../../src/application');
+
 require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once __DIR__ . '/../../src/library/Doctrine/Common/ClassLoader.php';

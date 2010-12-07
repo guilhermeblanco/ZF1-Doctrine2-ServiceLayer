@@ -1,3 +1,4 @@
+src/application/configs/doctrine.ini
 src/library/Core/Application/Resource/Doctrine.php
 src/library/Core/Application/Exception/
 src/library/Core/Application/Container/
