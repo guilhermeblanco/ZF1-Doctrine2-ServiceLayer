@@ -35,7 +35,7 @@ abstract class ContextImpl implements Context
 
         $this->map[$name] = array(
             'class'   => $service,
-            'options' => $options
+            'config'  => $options
         );
     }
 

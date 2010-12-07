@@ -46,15 +46,18 @@ abstract class AbstractService
     }
 
     /**
-     * Points to Loader adapter name which is used by ServiceLocator
-     * to instantiate this Service class.
+     * Retrieves a customized service configuration, allowing to override
+     * internal settings. Configuration keys:
+     *   - loader
+     *   - internal
+     *   - options
      *
      * @static
      * @return string
      */
-    public static function getLoaderAdapterName()
+    public static function getServiceConfiguration()
     {
-        return 'default';
+        return array();
     }
 
     /**

@@ -98,4 +98,15 @@ class LoaderManager
         $name = mb_strtolower($name);
         unset(self::$LOADERS[$name]);
     }
+
+    /**
+     * Remove an initialized loader instance
+     *
+     * @param string $name
+     */
+    public static function removeLoaderInstance($name)
+    {
+        $name = mb_strtolower($name);
+        unset(self::$instances[$name]);
+    } 
 }

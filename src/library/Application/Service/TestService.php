@@ -14,9 +14,9 @@ class TestService extends AbstractService
     /**
      * Returns some random stuff, this is a sample implementation.
      *
-     * @return TP\Entity\TweetDay
+     * @return string
      */
-    public function getTweetOfTheDay()
+    public function retrieveFooInstance()
     {
         //$em = $this->getEntityManager($this->options['rw']);
 

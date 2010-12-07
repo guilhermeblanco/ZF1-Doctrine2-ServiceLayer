@@ -1,0 +1,4 @@
+library/Doctrine/**/*
+library/Symfony/**/*
+library/Zend/**/*
+vendor/**/*
