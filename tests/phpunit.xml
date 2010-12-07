@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit strict="true">
+    <filter>
+        <blacklist>
+            <directory suffix=".php">../src/library/Doctrine</directory>
+            <directory suffix=".php">../src/library/Symfony</directory>
+            <directory suffix=".php">../src/library/Zend</directory>
+            <directory suffix=".php">../tests</directory>
+        </blacklist>
+    </filter>
+</phpunit>
