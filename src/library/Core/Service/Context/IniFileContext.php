@@ -30,7 +30,7 @@ class IniFileContext extends ContextImpl
             // Do not allow 'class' config entry
             unset($serviceConfig['class']);
 
-            $this->bind($name, $options->class, $serviceConfig);
+            $this->bind($name, $serviceClass, $serviceConfig);
         }
     }
 }
