@@ -1,4 +1,4 @@
-library/Doctrine/**/*
-library/Symfony/**/*
-library/Zend/**/*
-vendor/**/*
+src/library/Doctrine/
+src/library/Symfony/
+src/library/Zend/
+vendor/
