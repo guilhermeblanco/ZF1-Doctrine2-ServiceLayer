@@ -2,7 +2,7 @@
 
 namespace Unit;
 
-use Unit\Core;
+use Unit\Bisna;
 //use Unit\Application;
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -10,6 +10,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once __DIR__ . '/TestInit.php';
+require_once __DIR__ . '/Bisna/AllTests.php';
 
 class AllTests
 {
@@ -21,7 +22,7 @@ class AllTests
     public static function suite()
     {
         $suite = new \PHPUnit_Framework_TestSuite('ZF1 D2 Service Layer Tests');
-        $suite->addTest(\Unit\Core\AllTests::suite());
+        $suite->addTest(\Unit\Bisna\AllTests::suite());
         //$suite->addTest(Application\AllTests::suite());
 
         return $suite;

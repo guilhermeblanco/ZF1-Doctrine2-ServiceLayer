@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\Core\Service\Loader;
+namespace Unit\Bisna\Service\Loader;
 
-use Core\Service;
+use Bisna\Service;
 
 /**
  * DefaultLoaderTest
@@ -22,7 +22,7 @@ class DefaultLoaderTest extends \PHPUnit_Framework_TestCase
         ));
 
         $d2Config  = new \Zend_Config_Ini($doctrine, 'production');
-        $container = new \Core\Application\Container\DoctrineContainer(
+        $container = new \Bisna\Application\Container\DoctrineContainer(
             $d2Config->resources->doctrine->toArray()
         );
 

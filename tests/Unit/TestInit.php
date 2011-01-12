@@ -23,7 +23,7 @@ $classLoader = new \Doctrine\Common\ClassLoader('Zend');
 $classLoader->setNamespaceSeparator('_');
 $classLoader->register();
 
-$classLoader = new \Doctrine\Common\ClassLoader('Core');
+$classLoader = new \Doctrine\Common\ClassLoader('Bisna');
 $classLoader->register();
 
 $classLoader = new \Doctrine\Common\ClassLoader('Application');

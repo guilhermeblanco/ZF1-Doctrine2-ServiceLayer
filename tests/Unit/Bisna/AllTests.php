@@ -1,11 +1,11 @@
 <?php
 
-namespace Unit\Core;
+namespace Unit\Bisna;
 
-use Unit\Core\Service;
+use Unit\Bisna\Service;
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Core_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Bisna_AllTests::main');
 }
 
 require_once __DIR__ . '/../TestInit.php';
@@ -19,7 +19,7 @@ class AllTests
 
     public static function suite()
     {
-        $suite = new \PHPUnit_Framework_TestSuite('Core Tests');
+        $suite = new \PHPUnit_Framework_TestSuite('Bisna Tests');
 
         $suite->addTest(Service\AllTests::suite());
 
@@ -27,6 +27,6 @@ class AllTests
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Core_AllTests::main') {
+if (PHPUnit_MAIN_METHOD == 'Bisna_AllTests::main') {
     AllTests::main();
 }
