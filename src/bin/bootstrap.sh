@@ -29,7 +29,7 @@ svn co http://framework.zend.com/svn/framework/standard/trunk/library/Zend ${APP
 
 # Copying files
 cp -R ${APP_ROOT}vendor/ZF1-D2/library/Bisna ${APP_ROOT}library
-cp ${APP_ROOT}vendor/ZF1-D2/application/configs/doctrine.ini ${APP_ROOT}application/configs/doctrine.ini
+cp ${APP_ROOT}vendor/ZF1-D2/application/configs/application.ini ${APP_ROOT}application/configs/doctrine.ini
 
 mkdir -p ${APP_ROOT}library/Doctrine
 
