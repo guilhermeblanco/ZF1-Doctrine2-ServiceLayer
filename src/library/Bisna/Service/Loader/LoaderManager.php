@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Service\Loader;
+namespace Bisna\Service\Loader;
 
-use Core\Service\Exception;
+use Bisna\Service\Exception;
 
 /**
  * LoaderManager class
@@ -15,8 +15,8 @@ class LoaderManager
      * @var array Subscribed Loaders
      */
     private static $LOADERS = array(
-        'default'   => 'Core\Service\Loader\DefaultLoader',
-        'singleton' => 'Core\Service\Loader\SingletonLoader'
+        'default'   => 'Bisna\Service\Loader\DefaultLoader',
+        'singleton' => 'Bisna\Service\Loader\SingletonLoader'
     );
 
     /**
@@ -28,10 +28,10 @@ class LoaderManager
      * Retrieve the Loader
      *
      * @param string $name
-     * @param Core\Service\ServiceLocator $locator
-     * @return Core\Service\Loader\AbstractLoader
+     * @param Bisna\Service\ServiceLocator $locator
+     * @return Bisna\Service\Loader\AbstractLoader
      */
-    public static function getLoader($name, \Core\Service\ServiceLocator $locator)
+    public static function getLoader($name, \Bisna\Service\ServiceLocator $locator)
     {
         $originalName = $name;
         $name = mb_strtolower($name);

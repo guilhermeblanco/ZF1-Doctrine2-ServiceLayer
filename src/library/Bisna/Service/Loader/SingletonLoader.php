@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Service\Loader;
+namespace Bisna\Service\Loader;
 
 /**
  * SingletonLoader class.

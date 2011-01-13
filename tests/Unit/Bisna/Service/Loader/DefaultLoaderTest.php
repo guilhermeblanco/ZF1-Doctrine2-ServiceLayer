@@ -13,9 +13,10 @@ class DefaultLoaderTest extends \PHPUnit_Framework_TestCase
 {
     public function testInstantiation()
     {
-        $configDir = APPLICATION_PATH . '/configs';
-        $services  = $configDir . '/services.ini';
-        $doctrine  = $configDir . '/doctrine.ini';
+        $configDir      = APPLICATION_PATH . '/configs';
+        $serviceLocator = $configDir . '/serviceLocator.ini';
+        $services       = $configDir . '/services.ini';
+        $doctrine       = $configDir . '/doctrine.ini';
 
         $context   = new Service\Context\IniFileContext(array(
             'path' => $services

@@ -2,7 +2,7 @@
 
 namespace Application\Service;
 
-use Core\Service\AbstractService;
+use Bisna\Service\AbstractService;
 
 /**
  * TestService class.

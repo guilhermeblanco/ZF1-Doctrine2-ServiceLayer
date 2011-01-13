@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Service;
+namespace Bisna\Service;
 
 /**
  * AbstractService class
@@ -10,7 +10,7 @@ namespace Core\Service;
 abstract class AbstractService
 {
     /**
-     * @var Core\Service\ServiceLocator
+     * @var Bisna\Service\ServiceLocator
      */
     protected $locator;
 
@@ -23,7 +23,7 @@ abstract class AbstractService
     /**
      * Constructor.
      *
-     * @param Core\Service\ServiceLocator $locator
+     * @param Bisna\Service\ServiceLocator $locator
      * @param array $options
      */
     public final function __construct(ServiceLocator $locator, array $options = array())
@@ -63,7 +63,7 @@ abstract class AbstractService
     /**
      * Returns the ServiceLocator.
      *
-     * @return Core\Service\ServiceLocator
+     * @return Bisna\Service\ServiceLocator
      */
     public function getServiceLocator()
     {

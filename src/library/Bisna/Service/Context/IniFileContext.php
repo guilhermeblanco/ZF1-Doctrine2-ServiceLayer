@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Service\Context;
+namespace Bisna\Service\Context;
 
-use Core\Service\Exception;
+use Bisna\Service\Exception;
 
 /**
  * IniFileContext class.

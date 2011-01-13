@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Service\Loader;
+namespace Bisna\Service\Loader;
 
 /**
  * Loader interface
@@ -14,7 +14,7 @@ interface Loader
      *
      * @param string $class
      * @param array $options
-     * @return Core\Service\AbstractService
+     * @return Bisna\Service\AbstractService
      */
      public function load($class, array $options = array());
 }

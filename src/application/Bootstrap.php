@@ -7,8 +7,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         require_once APPLICATION_PATH . '/../library/Doctrine/Common/ClassLoader.php';
 
         $autoloader = \Zend_Loader_Autoloader::getInstance();
-        $coreAutoloader = new \Doctrine\Common\ClassLoader('Core');
-        $autoloader->pushAutoloader(array($coreAutoloader, 'loadClass'), 'Core');
+        $bisnaAutoloader = new \Doctrine\Common\ClassLoader('Bisna');
+        $autoloader->pushAutoloader(array($bisnaAutoloader, 'loadClass'), 'Bisna');
 
         // Your Application autoloader goes here!
         $appAutoloader = new \Doctrine\Common\ClassLoader('Application');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Service\Exception;
+namespace Bisna\Service\Exception;
 
 /**
  * InvalidNameException class.

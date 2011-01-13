@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Service\Context;
+namespace Bisna\Service\Context;
 
 /**
  * Context interface.

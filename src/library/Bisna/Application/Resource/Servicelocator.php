@@ -1,21 +1,21 @@
 <?php
 
 // Zend Framework cannot deal with Resources using namespaces
-//namespace Core\Application\Resource;
+//namespace Bisna\Application\Resource;
 
-use Core\Application\Container;
+use Bisna\Application\Container;
 
 /**
  * Zend Application Resource ServiceLocator class
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
-class Core_Application_Resource_Servicelocator extends \Zend_Application_Resource_ResourceAbstract
+class Bisna_Application_Resource_Servicelocator extends \Zend_Application_Resource_ResourceAbstract
 {
     /**
      * Initializes ServiceLocator Container.
      *
-     * @return Core\Service\ServiceLocator
+     * @return Bisna\Service\ServiceLocator
      */
     public function init()
     {
@@ -28,7 +28,7 @@ class Core_Application_Resource_Servicelocator extends \Zend_Application_Resourc
         $context = new $contextClass($config['context']['options']);
         
         // Starting ServiceLocator container
-        $container = new Core\Service\ServiceLocator($context, \Zend_Registry::get('doctrine'));
+        $container = new Bisna\Service\ServiceLocator($context, \Zend_Registry::get('doctrine'));
 
         // Add to Zend Registry
         \Zend_Registry::set('serviceLocator', $container);

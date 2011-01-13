@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Service\Loader;
+namespace Bisna\Service\Loader;
 
 /**
  * AbstractLoader class.
@@ -10,16 +10,16 @@ namespace Core\Service\Loader;
 abstract class AbstractLoader
 {
     /**
-     * @var Core\Service\ServiceLocator
+     * @var Bisna\Service\ServiceLocator
      */
     protected $locator;
 
     /**
      * Constructor.
      *
-     * @param Core\Service\ServiceLocator $locator ServiceLocator
+     * @param Bisna\Service\ServiceLocator $locator ServiceLocator
      */
-    public function __construct(\Core\Service\ServiceLocator $locator)
+    public function __construct(\Bisna\Service\ServiceLocator $locator)
     {
         $this->locator = $locator;
     }

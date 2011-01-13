@@ -28,8 +28,8 @@ git clone git://github.com/doctrine/doctrine2.git ${APP_ROOT}vendor/doctrine-orm
 svn co http://framework.zend.com/svn/framework/standard/trunk/library/Zend ${APP_ROOT}vendor/zend
 
 # Copying files
-cp -R ${APP_ROOT}vendor/ZF1-D2/library/Core ${APP_ROOT}library
-cp ${APP_ROOT}vendor/ZF1-D2/application/configs/application.ini ${APP_ROOT}application/configs/doctrine.ini
+cp -R ${APP_ROOT}vendor/ZF1-D2/library/Bisna ${APP_ROOT}library
+cp ${APP_ROOT}vendor/ZF1-D2/application/configs/doctrine.ini ${APP_ROOT}application/configs/doctrine.ini
 
 mkdir -p ${APP_ROOT}library/Doctrine
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Service;
+namespace Bisna\Service;
 
-use Core\Application\Container\DoctrineContainer;
+use Bisna\Application\Container\DoctrineContainer;
 
 /**
  * ServiceLocator class.
@@ -12,12 +12,12 @@ use Core\Application\Container\DoctrineContainer;
 class ServiceLocator
 {
     /**
-     * @var Core\Service\Context\Context $context ServiceLocator Context
+     * @var Bisna\Service\Context\Context $context ServiceLocator Context
      */
     private $context;
 
     /**
-     * @var Core\Application\Container\DoctrineContainer $doctrineContainer Doctrine Container
+     * @var Bisna\Application\Container\DoctrineContainer $doctrineContainer Doctrine Container
      */
     private $doctrineContainer;
 
@@ -25,8 +25,8 @@ class ServiceLocator
     /**
      * Constructor.
      *
-     * @param Core\Service\Context\Context $context ServiceLocator Context
-     * @param Core\Application\Container\DoctrineContainer $doctrineContainer Doctrine Container
+     * @param Bisna\Service\Context\Context $context ServiceLocator Context
+     * @param Bisna\Application\Container\DoctrineContainer $doctrineContainer Doctrine Container
      */
     public function __construct(Context\Context $context, DoctrineContainer $doctrineContainer)
     {
@@ -37,7 +37,7 @@ class ServiceLocator
     /**
      * Returns the Doctrine Container.
      *
-     * @return Core\Application\Container\DoctrineContainer
+     * @return Bisna\Application\Container\DoctrineContainer
      */
     public function getDoctrineContainer()
     {
@@ -45,10 +45,20 @@ class ServiceLocator
     }
 
     /**
+     * Returns the Service Context.
+     *
+     * @return Bisna\Service\Context\Context
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
      * Loads an external Service.
      *
      * @param string $name External service name
-     * @return Core\Service\AbstractService
+     * @return Bisna\Service\AbstractService
      */
     public function getService($name)
     {
@@ -69,7 +79,7 @@ class ServiceLocator
      * Loads an internal Service.
      *
      * @param string $name Internal service name
-     * @return Core\Service\AbstractService
+     * @return Bisna\Service\AbstractService
      */
     public function getInternalService($name)
     {
@@ -90,7 +100,7 @@ class ServiceLocator
      * Loads a Service.
      *
      * @param array $serviceContext
-     * @return Core\Service\AbstractService
+     * @return Bisna\Service\AbstractService
      */
     private function loadService(array $serviceContext)
     {
@@ -98,7 +108,7 @@ class ServiceLocator
         $serviceConfig = $serviceContext['config'];
         
         $loaderName    = isset($serviceConfig['loader']) ? $serviceConfig['loader'] : 'default';
-        $loaderAdapter = Loader\LoaderManager::getLoader($serviceConfig['loader'], $this);
+        $loaderAdapter = Loader\LoaderManager::getLoader($loaderName, $this);
 
         return $loaderAdapter->load($serviceClass, $serviceConfig['options']);
     }
