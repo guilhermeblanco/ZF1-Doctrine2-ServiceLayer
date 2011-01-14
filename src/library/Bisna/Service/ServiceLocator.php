@@ -65,6 +65,13 @@ class ServiceLocator
         $serviceContext = $this->context->lookup($name);
         $serviceConfig  = $serviceContext['config'];
 
+		// Throw an exception if service not found
+		if (!is_array($serviceContext)) {
+			throw new Exception\InvalidServiceException(
+				"Unable to locate service '".$name."'."
+			);
+		}
+
         // Throw exception if service is internal
         if (isset($serviceConfig['internal']) && $serviceConfig['internal']) {
             throw new Exception\InvalidServiceException(
