@@ -45,7 +45,7 @@ class LoaderManager
             $loaderClass = self::$LOADERS[$name];
             $reflClass = new \ReflectionClass($loaderClass);
             
-            if ( ! $reflClass->implementsInterface('Core\Service\Loader\Loader')) {
+            if ( ! $reflClass->implementsInterface('Bisna\Service\Loader\Loader')) {
                 throw new Exception\InvalidClassException(
                     "Loader '{$originalName}' points to '{$loaderClass}' class which does not implement Loader interface."
                 );
