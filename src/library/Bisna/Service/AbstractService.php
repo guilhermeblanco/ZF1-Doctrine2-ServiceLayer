@@ -38,7 +38,7 @@ abstract class AbstractService
      * @param string $emName
      * @return Doctrine\ORM\EntityManager
      */
-    protected function getEntityManager($emName)
+    protected function getEntityManager($emName = null)
     {
         $dContainer = $this->locator->getDoctrineContainer();
 

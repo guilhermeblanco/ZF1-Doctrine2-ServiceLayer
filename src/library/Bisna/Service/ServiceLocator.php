@@ -117,6 +117,8 @@ class ServiceLocator
         $loaderName    = isset($serviceConfig['loader']) ? $serviceConfig['loader'] : 'default';
         $loaderAdapter = Loader\LoaderManager::getLoader($loaderName, $this);
 
-        return $loaderAdapter->load($serviceClass, $serviceConfig['options']);
+		$options	   = isset($serviceConfig['options']) ? $serviceConfig['options'] : array(); 
+		
+        return $loaderAdapter->load($serviceClass, $options);
     }
 }
