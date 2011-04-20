@@ -30,6 +30,17 @@ abstract class AbstractService
     {
         $this->locator = $locator;
         $this->options = $options;
+        
+        $this->initializeService();
+    }
+    
+    /**
+     * Extra initialization support for Service.
+     * 
+     * @return void
+     */
+    protected function initializeService()
+    {
     }
 
     /**
