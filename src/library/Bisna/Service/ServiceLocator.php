@@ -107,6 +107,16 @@ class ServiceLocator
 
         return $this->loadService($serviceContext);
     }
+    
+    /**
+     * Retrieve internal instance of Bisna Service Loader Manager.
+     * 
+     * @return Bisna\Service\Loader\LoaderManager
+     */
+    protected function getLoaderManager()
+    {
+        return $this->loaderManager;
+    }
 
     /**
      * Loads a Service.
@@ -120,7 +130,7 @@ class ServiceLocator
         $serviceConfig = $serviceContext['config'];
         
         $loaderName    = isset($serviceConfig['loader']) ? $serviceConfig['loader'] : 'default';
-        $loaderAdapter = $this->loaderManager->getLoader($loaderName);
+        $loaderAdapter = $this->getLoaderManager()->getLoader($loaderName);
 
 		$options	   = isset($serviceConfig['options']) ? $serviceConfig['options'] : array(); 
 		
