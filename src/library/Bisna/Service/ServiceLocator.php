@@ -20,7 +20,11 @@ class ServiceLocator
      * @var Bisna\Application\Container\DoctrineContainer $doctrineContainer Doctrine Container
      */
     private $doctrineContainer;
-
+    
+    /**
+     * @var Bisna\Service\Loader\LaderManager $loaderManager Doctrine Service Loader Manager
+     */
+    private $loaderManager;
 
     /**
      * Constructor.
@@ -30,8 +34,9 @@ class ServiceLocator
      */
     public function __construct(Context\Context $context, DoctrineContainer $doctrineContainer)
     {
-        $this->context = $context;
+        $this->loaderManager     = new Loader\LoaderManager($this);
         $this->doctrineContainer = $doctrineContainer;
+        $this->context           = $context;
     }
 
     /**
@@ -115,7 +120,7 @@ class ServiceLocator
         $serviceConfig = $serviceContext['config'];
         
         $loaderName    = isset($serviceConfig['loader']) ? $serviceConfig['loader'] : 'default';
-        $loaderAdapter = Loader\LoaderManager::getLoader($loaderName, $this);
+        $loaderAdapter = $this->loaderManager->getLoader($loaderName);
 
 		$options	   = isset($serviceConfig['options']) ? $serviceConfig['options'] : array(); 
 		

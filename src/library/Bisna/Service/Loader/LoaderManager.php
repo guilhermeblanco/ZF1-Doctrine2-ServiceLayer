@@ -18,11 +18,26 @@ class LoaderManager
         'default'   => 'Bisna\Service\Loader\DefaultLoader',
         'singleton' => 'Bisna\Service\Loader\SingletonLoader'
     );
+    
+    /**
+     * @var Bisna\Service\ServiceLocator
+     */
+    private $locator;
 
     /**
      * @var array Loaded loaders
      */
-    private static $instances = array();
+    private $instances = array();
+    
+    /**
+     * Constructor
+     * 
+     * @param Bisna\Service\ServiceLocator $locator 
+     */
+    public function __construct(\Bisna\Service\ServiceLocator $locator)
+    {
+        $this->locator = $locator;
+    }
 
     /**
      * Retrieve the Loader
@@ -31,12 +46,12 @@ class LoaderManager
      * @param Bisna\Service\ServiceLocator $locator
      * @return Bisna\Service\Loader\AbstractLoader
      */
-    public static function getLoader($name, \Bisna\Service\ServiceLocator $locator)
+    public function getLoader($name)
     {
         $originalName = $name;
         $name = mb_strtolower($name);
 
-        if ( ! isset(self::$instances[$name])) {
+        if ( ! isset($this->instances[$name])) {
             // Loader is not yet loaded.
             if ( ! isset(self::$LOADERS[$name])) {
                 throw new Exception\NameNotFoundException("Unable to find Loader entry '{$originalName}'.");
@@ -51,10 +66,10 @@ class LoaderManager
                 );
             }
 
-            self::$instances[$name] = new $loaderClass($locator);
+            $this->instances[$name] = new $loaderClass($this->locator);
         }
 
-        return self::$instances[$name];
+        return $this->instances[$name];
     }
 
     /**
@@ -104,9 +119,11 @@ class LoaderManager
      *
      * @param string $name
      */
-    public static function removeLoaderInstance($name)
+    public function removeLoaderInstance($name)
     {
         $name = mb_strtolower($name);
-        unset(self::$instances[$name]);
+        
+        $this->instances[$name] = null;
+        unset($this->instances[$name]);
     } 
 }
