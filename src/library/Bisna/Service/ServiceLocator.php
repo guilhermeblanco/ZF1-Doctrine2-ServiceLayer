@@ -22,7 +22,7 @@ class ServiceLocator
     private $doctrineContainer;
     
     /**
-     * @var Bisna\Service\Loader\LaderManager $loaderManager Doctrine Service Loader Manager
+     * @var Bisna\Service\Loader\LoaderManager $loaderManager Doctrine Service Loader Manager
      */
     private $loaderManager;
 
