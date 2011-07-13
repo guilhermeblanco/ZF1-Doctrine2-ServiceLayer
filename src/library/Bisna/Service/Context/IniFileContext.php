@@ -23,7 +23,7 @@ class IniFileContext extends ContextImpl
         
         foreach ($servicesConfig as $name => $config) {
             $serviceClass  = $config->class;
-            $serviceConfig = array_merge(
+            $serviceConfig = array_merge_recursive(
                 $globalConfig, $config->toArray(), $serviceClass::getServiceConfiguration()
             );
             
