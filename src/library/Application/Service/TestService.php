@@ -2,14 +2,14 @@
 
 namespace Application\Service;
 
-use Bisna\Service\AbstractService;
+use Bisna\Service\Service as BisnaService;
 
 /**
  * TestService class.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
-class TestService extends AbstractService
+class TestService extends BisnaService
 {
     /**
      * Returns some random stuff, this is a sample implementation.
