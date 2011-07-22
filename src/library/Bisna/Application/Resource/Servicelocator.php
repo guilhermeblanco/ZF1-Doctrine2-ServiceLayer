@@ -2,7 +2,7 @@
 
 namespace Bisna\Application\Resource;
 
-use Bisna\Application\Container;
+use Bisna\Service\ServiceLocator as BisnaServiceLocator;
 
 /**
  * Zend Application Resource ServiceLocator class
@@ -27,7 +27,7 @@ class Servicelocator extends \Zend_Application_Resource_ResourceAbstract
         $context = new $contextClass($config['context']['options']);
         
         // Starting ServiceLocator container
-        $container = new Bisna\Service\ServiceLocator($context, \Zend_Registry::get('doctrine'));
+        $container = new BisnaServiceLocator($context, \Zend_Registry::get('doctrine'));
 
         // Add to Zend Registry
         \Zend_Registry::set('serviceLocator', $container);
