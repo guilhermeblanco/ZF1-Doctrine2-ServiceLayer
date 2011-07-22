@@ -2,7 +2,8 @@
 
 namespace Bisna\Service\Loader;
 
-use Bisna\Service\Exception;
+use Bisna\Service\ServiceLocator,
+    Bisna\Exception;
 
 /**
  * LoaderManager class
@@ -34,7 +35,7 @@ class LoaderManager
      * 
      * @param Bisna\Service\ServiceLocator $locator 
      */
-    public function __construct(\Bisna\Service\ServiceLocator $locator)
+    public function __construct(ServiceLocator $locator)
     {
         $this->locator = $locator;
     }

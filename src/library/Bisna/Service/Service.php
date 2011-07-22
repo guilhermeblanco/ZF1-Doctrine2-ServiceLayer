@@ -3,11 +3,11 @@
 namespace Bisna\Service;
 
 /**
- * AbstractService class
+ * Service class
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
-abstract class AbstractService
+abstract class Service
 {
     /**
      * @var Bisna\Service\ServiceLocator
@@ -60,7 +60,6 @@ abstract class AbstractService
      * Retrieves a customized service configuration, allowing to override
      * internal settings. Configuration keys:
      *   - loader
-     *   - internal
      *   - options
      *
      * @static

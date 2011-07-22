@@ -1,6 +1,6 @@
 <?php
 
-namespace Bisna\Service\Exception;
+namespace Bisna\Exception;
 
 /**
  * InvalidServiceException class.

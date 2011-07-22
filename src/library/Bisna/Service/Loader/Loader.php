@@ -14,7 +14,7 @@ interface Loader
      *
      * @param string $class
      * @param array $options
-     * @return Bisna\Service\AbstractService
+     * @return Bisna\Service\Service
      */
      public function load($class, array $options = array());
 }

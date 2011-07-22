@@ -2,7 +2,8 @@
 
 namespace Bisna\Service;
 
-use Bisna\Application\Container\DoctrineContainer;
+use Bisna\Doctrine\Container as DoctrineContainer,
+    Bisna\Exception;
 
 /**
  * ServiceLocator class.
@@ -17,12 +18,12 @@ class ServiceLocator
     private $context;
 
     /**
-     * @var Bisna\Application\Container\DoctrineContainer $doctrineContainer Doctrine Container
+     * @var Bisna\Doctrine\Container $doctrineContainer Doctrine Container
      */
     private $doctrineContainer;
     
     /**
-     * @var Bisna\Service\Loader\LoaderManager $loaderManager Doctrine Service Loader Manager
+     * @var Bisna\Service\Loader\LaderManager $loaderManager Doctrine Service Loader Manager
      */
     private $loaderManager;
 
@@ -30,7 +31,7 @@ class ServiceLocator
      * Constructor.
      *
      * @param Bisna\Service\Context\Context $context ServiceLocator Context
-     * @param Bisna\Application\Container\DoctrineContainer $doctrineContainer Doctrine Container
+     * @param Bisna\Doctrine\Container $doctrineContainer Doctrine Container
      */
     public function __construct(Context\Context $context, DoctrineContainer $doctrineContainer)
     {
@@ -42,7 +43,7 @@ class ServiceLocator
     /**
      * Returns the Doctrine Container.
      *
-     * @return Bisna\Application\Container\DoctrineContainer
+     * @return Bisna\Doctrine\Container
      */
     public function getDoctrineContainer()
     {
@@ -58,27 +59,61 @@ class ServiceLocator
     {
         return $this->context;
     }
+    
+    /**
+     * Checks if a given service name is currently mapped as a service in ServiceLocator.
+     * 
+     * @param string $name Service name
+     * 
+     * @return boolean
+     */
+    public function hasService($name)
+    {
+        $serviceContext = $this->context->lookup($name);
+        
+        if ($serviceContext === null) {
+            return false;
+        }
+        
+        $classParents = class_parents($serviceContext['class']);
+        
+        return in_array('Bisna\Service\Service', $classParents) && 
+             ! in_array('Bisna\Service\InternalService', $classParents);
+    }
+    
+    /**
+     * Checks if a given service name is currently mapped as an internal service in ServiceLocator.
+     * 
+     * @param string $name Service name
+     * 
+     * @return boolean
+     */
+    public function hasInternalService($name)
+    {
+        $serviceContext = $this->context->lookup($name);
+        
+        if ($serviceContext === null) {
+            return false;
+        }
+        
+        $classParents = class_parents($serviceContext['class']);
+        
+        return in_array('Bisna\Service\InternalService', $classParents);
+    }
 
     /**
      * Loads an external Service.
      *
      * @param string $name External service name
-     * @return Bisna\Service\AbstractService
+     * @return Bisna\Service\Service
      */
     public function getService($name)
     {
-        $serviceContext = $this->context->lookup($name);
-        $serviceConfig  = $serviceContext['config'];
-
-        // Throw an exception if service not found
-        if (!is_array($serviceContext)) {
-            throw new Exception\InvalidServiceException(
-                "Unable to locate service '".$name."'."
-            );
-        }
-
+        $serviceContext = $this->getServiceContext($name);
+        $classParents   = class_parents($serviceContext['class']);
+        
         // Throw exception if service is internal
-        if (isset($serviceConfig['internal']) && $serviceConfig['internal']) {
+        if (in_array('Bisna\Service\InternalService', $classParents)) {
             throw new Exception\InvalidServiceException(
                 "Unable to initialize internal service '{$serviceContext['class']}' through an external call."
             );
@@ -91,21 +126,51 @@ class ServiceLocator
      * Loads an internal Service.
      *
      * @param string $name Internal service name
-     * @return Bisna\Service\AbstractService
+     * @return Bisna\Service\InternalService
      */
     public function getInternalService($name)
     {
-        $serviceContext = $this->context->lookup($name);
-        $serviceConfig  = $serviceContext['config'];
-
+        $serviceContext = $this->getServiceContext($name);
+        $classParents   = class_parents($serviceContext['class']);
+        
         // Throw exception if service is not internal
-        if ( ! (isset($serviceConfig['internal']) && $serviceConfig['internal'])) {
+        if ( ! in_array('Bisna\Service\InternalService', $classParents)) {
             throw new Exception\InvalidServiceException(
                 "Unable to initialize external service '{$serviceContext['class']}' through an internal call."
             );
         }
 
         return $this->loadService($serviceContext);
+    }
+    
+    /**
+     * Retrieve context of a given service name.
+     * 
+     * @param string $name Service name
+     * 
+     * @return array
+     */
+    private function getServiceContext($name)
+    {
+        $serviceContext = $this->context->lookup($name);
+        
+        // Throw an exception if service not found
+        if ( ! is_array($serviceContext)) {
+            throw new Exception\InvalidServiceException(
+                "Unable to locate service '".$name."'."
+            );
+        }
+
+        $classParents = class_parents($serviceContext['class']);
+        
+        // Throw exception if service is not service
+        if ( ! in_array('Bisna\Service\Service', $classParents)) {
+            throw new Exception\InvalidServiceException(
+                "Unable to initialize a non service '{$serviceContext['class']}'."
+            );
+        }
+        
+        return $serviceContext;
     }
     
     /**
@@ -122,7 +187,7 @@ class ServiceLocator
      * Loads a Service.
      *
      * @param array $serviceContext
-     * @return Bisna\Service\AbstractService
+     * @return Bisna\Service\Service
      */
     private function loadService(array $serviceContext)
     {
