@@ -237,7 +237,9 @@ class ServiceLocator
     private function loadService(array $serviceContext)
     {
         $serviceClass  = $serviceContext['class'];
-        $serviceConfig = array_merge_recursive($this->globalConfig, $serviceContext['config']);
+        $serviceConfig = array_merge_recursive(
+            $this->globalConfig, $serviceContext['config'], $serviceClass::getServiceConfiguration()
+        );
         
         $loaderName    = isset($serviceConfig['loader']) ? $serviceConfig['loader'] : 'default';
         $loaderAdapter = $this->loaderManager->getLoader($loaderName);

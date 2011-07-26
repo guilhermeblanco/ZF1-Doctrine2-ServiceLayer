@@ -43,7 +43,7 @@ class DirContext extends ContextImpl
                 }
 
                 $serviceClass  = $newClassEntries[0];
-                $serviceConfig = $serviceClass::getServiceConfiguration();
+                $serviceConfig = array();
                 
                 // Do not allow 'class' config entry
                 unset($serviceConfig['class']);
