@@ -16,14 +16,13 @@ class DirContext extends ContextImpl
      *
      * @param array $config Context configuration
      */
-    public function __construct(array $config = array())
+    public function __construct($path, array $config = array())
     {
         $declaredClasses = get_declared_classes();
 
-        $dirIterator  = new \DirectoryIterator($config['dir']);
+        $dirIterator  = new \DirectoryIterator($path);
         $suffix       = (isset($config['suffix']) ? $config['suffix'] : 'Service') . '.php';
-        $globalConfig = isset($config['globalConfig']) ? $config['globalConfig'] : array();
-
+        
         foreach ($dirIterator as $file) {
             if ( ! $file->isDot() && ! $file->isDir() && mb_substr($file->getBasename($suffix), -4) == '.php') {
                 require_once $file->getRealPath();
@@ -44,9 +43,7 @@ class DirContext extends ContextImpl
                 }
 
                 $serviceClass  = $newClassEntries[0];
-                $serviceConfig = array_merge(
-                    $globalConfig, $serviceClass::getServiceConfiguration()
-                );
+                $serviceConfig = $serviceClass::getServiceConfiguration();
                 
                 // Do not allow 'class' config entry
                 unset($serviceConfig['class']);

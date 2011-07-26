@@ -16,16 +16,13 @@ class IniFileContext extends ContextImpl
      *
      * @param array $config Context configuration
      */
-    public function __construct(array $config = array())
+    public function __construct($path, array $config = array())
     {
-        $servicesConfig = new \Zend_Config_Ini($config['path']);
-        $globalConfig   = isset($config['globalConfig']) ? $config['globalConfig'] : array();
+        $servicesConfig = new \Zend_Config_Ini($path);
         
         foreach ($servicesConfig as $name => $config) {
             $serviceClass  = $config->class;
-            $serviceConfig = array_merge_recursive(
-                $globalConfig, $config->toArray(), $serviceClass::getServiceConfiguration()
-            );
+            $serviceConfig = array_merge_recursive($config->toArray(), $serviceClass::getServiceConfiguration());
             
             // Do not allow 'class' config entry
             unset($serviceConfig['class']);

@@ -2,7 +2,7 @@
 
 namespace Bisna\Service\Context;
 
-use Bisna\Service\Exception;
+use Bisna\Exception;
 
 /**
  * ContextImpl class.
@@ -12,7 +12,7 @@ use Bisna\Service\Exception;
 abstract class ContextImpl implements Context
 {
     /**
-     * @var array Hashmap of binded context entries.
+     * @var array Hashmap of binded Context entries.
      */
     private $map = array();
 

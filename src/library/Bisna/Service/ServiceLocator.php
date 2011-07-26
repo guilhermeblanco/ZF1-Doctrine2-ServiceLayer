@@ -13,9 +13,14 @@ use Bisna\Doctrine\Container as DoctrineContainer,
 class ServiceLocator
 {
     /**
-     * @var Bisna\Service\Context\Context $context ServiceLocator Context
+     * @var Bisna\Service\Context\ContextManager ServiceLocator Context Manager
      */
-    private $context;
+    private $contextManager;
+
+    /**
+     * @var Bisna\Service\Loader\LaderManager $loaderManager Doctrine Service Loader Manager
+     */
+    private $loaderManager;
 
     /**
      * @var Bisna\Doctrine\Container $doctrineContainer Doctrine Container
@@ -23,25 +28,29 @@ class ServiceLocator
     private $doctrineContainer;
     
     /**
-     * @var Bisna\Service\Loader\LaderManager $loaderManager Doctrine Service Loader Manager
+     * @var array Global Service configuration.
      */
-    private $loaderManager;
+    private $globalConfig = array();
 
     /**
      * Constructor.
      *
-     * @param Bisna\Service\Context\Context $context ServiceLocator Context
      * @param Bisna\Doctrine\Container $doctrineContainer Doctrine Container
+     * @param array $config Service Locator Configuration
      */
-    public function __construct(Context\Context $context, DoctrineContainer $doctrineContainer)
+    public function __construct(DoctrineContainer $doctrineContainer, array $config)
     {
+        $this->contextManager    = new Context\ContextManager();
         $this->loaderManager     = new Loader\LoaderManager($this);
+        
         $this->doctrineContainer = $doctrineContainer;
-        $this->context           = $context;
+        
+        $this->setGlobalConfig(isset($config['globalConfig']) ? $config['globalConfig'] : array());
+        $this->startContexts($config);
     }
 
     /**
-     * Returns the Doctrine Container.
+     * Retrieve the Doctrine Container.
      *
      * @return Bisna\Doctrine\Container
      */
@@ -51,13 +60,43 @@ class ServiceLocator
     }
 
     /**
-     * Returns the Service Context.
+     * Retrieve internal instance of Bisna Service Context Manager.
      *
-     * @return Bisna\Service\Context\Context
+     * @return Bisna\Service\Context\ContextManager
      */
-    public function getContext()
+    public function getContextManager()
     {
-        return $this->context;
+        return $this->contextManager;
+    }
+    
+    /**
+     * Retrieve internal instance of Bisna Service Loader Manager.
+     * 
+     * @return Bisna\Service\Loader\LoaderManager
+     */
+    protected function getLoaderManager()
+    {
+        return $this->loaderManager;
+    }
+    
+    /**
+     * Retrieve Bisna Service Locator Global Services Configuration.
+     * 
+     * @return array
+     */
+    public function getGlobalConfig()
+    {
+        return $this->globalConfig;
+    }
+    
+    /**
+     * Define the Bisna Service Locator Global Services Configuration.
+     * 
+     * @param array $globalConfig 
+     */
+    public function setGlobalConfig(array $globalConfig)
+    {
+        $this->globalConfig = $globalConfig;
     }
     
     /**
@@ -69,7 +108,7 @@ class ServiceLocator
      */
     public function hasService($name)
     {
-        $serviceContext = $this->context->lookup($name);
+        $serviceContext = $this->contextManager->lookup($name);
         
         if ($serviceContext === null) {
             return false;
@@ -90,7 +129,7 @@ class ServiceLocator
      */
     public function hasInternalService($name)
     {
-        $serviceContext = $this->context->lookup($name);
+        $serviceContext = $this->contextManager->lookup($name);
         
         if ($serviceContext === null) {
             return false;
@@ -152,7 +191,7 @@ class ServiceLocator
      */
     private function getServiceContext($name)
     {
-        $serviceContext = $this->context->lookup($name);
+        $serviceContext = $this->contextManager->lookup($name);
         
         // Throw an exception if service not found
         if ( ! is_array($serviceContext)) {
@@ -174,13 +213,19 @@ class ServiceLocator
     }
     
     /**
-     * Retrieve internal instance of Bisna Service Loader Manager.
+     * Starts per configuration Service Locator Contexts.
      * 
-     * @return Bisna\Service\Loader\LoaderManager
+     * @param array $config 
      */
-    protected function getLoaderManager()
+    private function startContexts($config)
     {
-        return $this->loaderManager;
+        foreach ($config['contexts'] as $contextName => $contextConfig) {
+            $contextClass   = $contextConfig['adapterClass'];
+            $contextPath    = $contextConfig['path'];
+            $contextOptions = isset($contextConfig['options']) ? $contextConfig['options'] : array();
+            
+            $this->contextManager->addContext($contextName, new $contextClass($contextPath, $contextOptions));
+        }
     }
 
     /**
@@ -192,10 +237,10 @@ class ServiceLocator
     private function loadService(array $serviceContext)
     {
         $serviceClass  = $serviceContext['class'];
-        $serviceConfig = $serviceContext['config'];
+        $serviceConfig = array_merge_recursive($this->globalConfig, $serviceContext['config']);
         
         $loaderName    = isset($serviceConfig['loader']) ? $serviceConfig['loader'] : 'default';
-        $loaderAdapter = $this->getLoaderManager()->getLoader($loaderName);
+        $loaderAdapter = $this->loaderManager->getLoader($loaderName);
 
 		$options	   = isset($serviceConfig['options']) ? $serviceConfig['options'] : array(); 
 		

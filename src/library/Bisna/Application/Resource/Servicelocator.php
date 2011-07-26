@@ -22,12 +22,8 @@ class Servicelocator extends \Zend_Application_Resource_ResourceAbstract
 
         $config = $this->getOptions();
 
-        // Starting Context
-        $contextClass = $config['context']['adapterClass'];
-        $context = new $contextClass($config['context']['options']);
-        
         // Starting ServiceLocator container
-        $container = new BisnaServiceLocator($context, \Zend_Registry::get('doctrine'));
+        $container = new BisnaServiceLocator(\Zend_Registry::get('doctrine'), $config);
 
         // Add to Zend Registry
         \Zend_Registry::set('serviceLocator', $container);

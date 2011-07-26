@@ -83,10 +83,9 @@ class LoaderManager
     }
 
     /**
-     * Retrieve the Loader
+     * Retrieve a Loader based on its name.
      *
      * @param string $name
-     * @param Bisna\Service\ServiceLocator $locator
      * @return Bisna\Service\Loader\AbstractLoader
      */
     public function getLoader($name)
