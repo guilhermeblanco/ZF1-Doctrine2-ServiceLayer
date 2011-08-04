@@ -19,7 +19,6 @@ abstract class Service
      */
     protected $options;
     
-
     /**
      * Constructor.
      *
@@ -88,5 +87,28 @@ abstract class Service
     public function getOptions()
     {
         return $this->options;
+    }
+    
+    /**
+     * Return a Service option or inner (Nth-level) option.
+     * 
+     * @param string $optionName 
+     * @param mixed $default Optional default value. If ommitted, default is null.
+     * @return mixed
+     */
+    public function getOption($optionName, $default = null)
+    {
+        $parts = explode('.', $optionName);
+        $scope = $this->getOptions();
+        
+        foreach ($parts as $part) {
+            if ( ! (is_array($scope) && isset($scope[$part]))) {
+                return $default;
+            }
+            
+            $scope = $scope[$part];
+        }
+        
+        return $scope;
     }
 }
