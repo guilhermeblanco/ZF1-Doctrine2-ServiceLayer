@@ -18,7 +18,7 @@ class ServiceLocator
     private $contextManager;
 
     /**
-     * @var \Bisna\Service\Loader\LaderManager $loaderManager Doctrine Service Loader Manager
+     * @var \Bisna\Service\Loader\LoaderManager $loaderManager Doctrine Service Loader Manager
      */
     private $loaderManager;
 
