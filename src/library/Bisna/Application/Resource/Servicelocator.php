@@ -14,7 +14,7 @@ class Servicelocator extends \Zend_Application_Resource_ResourceAbstract
     /**
      * Initializes ServiceLocator Container.
      *
-     * @return Bisna\Service\ServiceLocator
+     * @return \Bisna\Service\ServiceLocator
      */
     public function init()
     {
