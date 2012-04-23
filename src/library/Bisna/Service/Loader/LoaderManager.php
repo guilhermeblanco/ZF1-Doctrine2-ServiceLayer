@@ -21,7 +21,7 @@ class LoaderManager
     );
     
     /**
-     * @var Bisna\Service\ServiceLocator
+     * @var \Bisna\Service\ServiceLocator
      */
     private $locator;
 
@@ -33,7 +33,7 @@ class LoaderManager
     /**
      * Constructor
      * 
-     * @param Bisna\Service\ServiceLocator $locator 
+     * @param \Bisna\Service\ServiceLocator $locator 
      */
     public function __construct(ServiceLocator $locator)
     {
