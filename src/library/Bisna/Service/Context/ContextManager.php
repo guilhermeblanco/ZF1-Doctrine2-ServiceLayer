@@ -62,7 +62,7 @@ class ContextManager
      *
      * @param string $name
      * 
-     * @return Bisna\Service\Context\Context
+     * @return \Bisna\Service\Context\Context
      */
     public function getContext($name)
     {
