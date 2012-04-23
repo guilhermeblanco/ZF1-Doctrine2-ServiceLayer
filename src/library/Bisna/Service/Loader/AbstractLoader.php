@@ -10,14 +10,14 @@ namespace Bisna\Service\Loader;
 abstract class AbstractLoader
 {
     /**
-     * @var Bisna\Service\ServiceLocator
+     * @var \Bisna\Service\ServiceLocator
      */
     protected $locator;
 
     /**
      * Constructor.
      *
-     * @param Bisna\Service\ServiceLocator $locator ServiceLocator
+     * @param \Bisna\Service\ServiceLocator $locator ServiceLocator
      */
     public function __construct(\Bisna\Service\ServiceLocator $locator)
     {
