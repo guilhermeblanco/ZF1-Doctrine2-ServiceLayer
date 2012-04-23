@@ -10,7 +10,7 @@ namespace Bisna\Service;
 abstract class Service
 {
     /**
-     * @var Bisna\Service\ServiceLocator
+     * @var \Bisna\Service\ServiceLocator
      */
     protected $locator;
 
@@ -22,7 +22,7 @@ abstract class Service
     /**
      * Constructor.
      *
-     * @param Bisna\Service\ServiceLocator $locator
+     * @param \Bisna\Service\ServiceLocator $locator
      * @param array $options
      */
     public final function __construct(ServiceLocator $locator, array $options = array())
@@ -46,7 +46,7 @@ abstract class Service
      * Return Doctrine EntityManager
      *
      * @param string $emName
-     * @return Doctrine\ORM\EntityManager
+     * @return \Doctrine\ORM\EntityManager
      */
     protected function getEntityManager($emName = null)
     {
@@ -72,7 +72,7 @@ abstract class Service
     /**
      * Returns the ServiceLocator.
      *
-     * @return Bisna\Service\ServiceLocator
+     * @return \Bisna\Service\ServiceLocator
      */
     public function getServiceLocator()
     {
