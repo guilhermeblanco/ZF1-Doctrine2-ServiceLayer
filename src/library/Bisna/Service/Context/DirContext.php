@@ -20,9 +20,8 @@ class DirContext extends ContextImpl
     public function __construct($path, array $config = array())
     {
         $declaredClasses = get_declared_classes();
-
-        $dirIterator  = new \DirectoryIterator($path);
-        $suffix       = (isset($config['suffix']) ? $config['suffix'] : 'Service') . '.php';
+        $dirIterator     = new \DirectoryIterator($path);
+        $suffix          = (isset($config['suffix']) ? $config['suffix'] : 'Service') . '.php';
 
         foreach ($dirIterator as $file) {
             if ( ! $file->isDir() && preg_match('/' . preg_quote($suffix) . '$/', $file->getFilename()) === 1 ) {
@@ -35,8 +34,13 @@ class DirContext extends ContextImpl
                 if (count($newClassEntries) > 0) {
                     $name = $file->getBasename($suffix);
                     $serviceClass  = array_pop($newClassEntries);
+                    $serviceConfig = array();
 
-                    $this->bind($name, $serviceClass);
+                    if (isset($config[mb_strtolower($name)])) {
+                        $serviceConfig['options'] = $config[mb_strtolower($name)];
+                    }
+
+                    $this->bind($name, $serviceClass, $serviceConfig);
                 }
             }
         }
