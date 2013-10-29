@@ -8,6 +8,7 @@ use Bisna\Service\Exception;
  * DirContext class.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author LF Bittencourt <lf@lfbittencourt.com>
  */
 class DirContext extends ContextImpl
 {
@@ -19,36 +20,28 @@ class DirContext extends ContextImpl
     public function __construct($path, array $config = array())
     {
         $declaredClasses = get_declared_classes();
+        $dirIterator     = new \DirectoryIterator($path);
+        $suffix          = (isset($config['suffix']) ? $config['suffix'] : 'Service') . '.php';
 
-        $dirIterator  = new \DirectoryIterator($path);
-        $suffix       = (isset($config['suffix']) ? $config['suffix'] : 'Service') . '.php';
-        
         foreach ($dirIterator as $file) {
-            if ( ! $file->isDot() && ! $file->isDir() && mb_substr($file->getBasename($suffix), -4) == '.php') {
+            if ( ! $file->isDir() && preg_match('/' . preg_quote($suffix) . '$/', $file->getFilename()) === 1 ) {
                 require_once $file->getRealPath();
 
                 // Diff declared classes before and after the file require
                 $newDeclaredClasses = get_declared_classes();
                 $newClassEntries    = array_diff($newDeclaredClasses, $declaredClasses);
-                $declaredClasses    = $newDeclaredClasses;
 
-                $name = $file->getFilename($suffix);
+                if (count($newClassEntries) > 0) {
+                    $name = $file->getBasename($suffix);
+                    $serviceClass  = array_pop($newClassEntries);
+                    $serviceConfig = array();
 
-                if (count($newClassEntries) !== 1) {
-                    $multipleEntries = implode(', ', $newClassEntries);
-                    
-                    throw new \RuntimeException(
-                        "Cannot assign multiple services '{$multipleEntries}' to a single name '{$name}'."
-                    );
+                    if (isset($config[mb_strtolower($name)])) {
+                        $serviceConfig['options'] = $config[mb_strtolower($name)];
+                    }
+
+                    $this->bind($name, $serviceClass, $serviceConfig);
                 }
-
-                $serviceClass  = $newClassEntries[0];
-                $serviceConfig = array();
-                
-                // Do not allow 'class' config entry
-                unset($serviceConfig['class']);
-
-                $this->bind($name, $serviceClass, $serviceConfig);
             }
         }
     }
